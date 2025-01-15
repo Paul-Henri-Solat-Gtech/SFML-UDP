@@ -1,12 +1,35 @@
 #include "pch.h"
 #include "main.h"
 
-#include <SFML/Graphics.hpp>
 #include "Ball.h"
+#include "Network.h"
 
 int main()
 {
     std::cout << "Hello, Im Client!\n";
+
+    // ------------------ UDP
+
+    Network* client = new Network;
+
+    sockaddr_in addrDestinataire;
+    addrDestinataire.sin_port = htons(1025);
+    addrDestinataire.sin_family = AF_INET;
+
+    //Adress* addrDestinataire = new Adress(htons(1025), AF_INET);
+
+    if (inet_pton(AF_INET, "127.0.0.1", &addrDestinataire.sin_addr) <= 0)
+    {
+        // impossible de déterminer l'adresse
+        std::cout << "Erreur addresse destinataire : " << WSAGetLastError() << std::endl;
+        closesocket(client->GetSocket());
+        WSACleanup();
+        return 1;
+    }
+    
+    client->SendMsg(addrDestinataire);
+
+    // ------------------ SFML
 
     // Window
     sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
