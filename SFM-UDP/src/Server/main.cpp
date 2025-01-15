@@ -3,6 +3,6 @@
 
 int main()
 {
-    std::cout << "Hello, Im GameMultiplayer!\n";
+    std::cout << "Hello, Im Server!\n";
     return 0;
 }

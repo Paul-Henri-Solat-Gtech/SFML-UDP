@@ -1,9 +1,34 @@
 {
     "projects": {
+        "Client": {
+            "dependencies": [
+                "GameMultiplayer"
+            ],
+            "dependents": [],
+            "guid": "4EB4260E-578B-41E4-561A-70A96897026B",
+            "lib": false,
+            "pch": true,
+            "vcpkg": true,
+            "window": false
+        },
         "GameMultiplayer": {
             "dependencies": [],
-            "dependents": [],
+            "dependents": [
+                "Client",
+                "Server"
+            ],
             "guid": "0225726E-54C3-1FE7-0503-6B457C2E311C",
+            "lib": true,
+            "pch": true,
+            "vcpkg": true,
+            "window": false
+        },
+        "Server": {
+            "dependencies": [
+                "GameMultiplayer"
+            ],
+            "dependents": [],
+            "guid": "4BA87369-31AA-0088-387B-1EB10ED32F4E",
             "lib": false,
             "pch": true,
             "vcpkg": true,
