@@ -1,0 +1,17 @@
+{
+    "projects": {
+        "GameMultiplayer": {
+            "dependencies": [],
+            "dependents": [],
+            "guid": "0225726E-54C3-1FE7-0503-6B457C2E311C",
+            "lib": false,
+            "pch": true,
+            "vcpkg": true,
+            "window": false
+        }
+    },
+    "solution_guid": "1FE7678F-39AE-15BA-614C-1AA528D86436",
+    "solution_name": "GameMultiplayer",
+    "startup_project": "GameMultiplayer",
+    "version": "1.17.3"
+}
