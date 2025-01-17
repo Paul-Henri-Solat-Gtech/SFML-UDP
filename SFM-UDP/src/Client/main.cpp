@@ -10,15 +10,23 @@ int main()
 
     // ------------------ UDP
 
+    Network::InitDLL();
+
     Network* client = new Network;
 
-    sockaddr_in addrDestinataire;
-    addrDestinataire.sin_port = htons(1025);
-    addrDestinataire.sin_family = AF_INET;
+    if (client->InitSocket() != true) 
+    {
+        std::cout << "Cannot create socket\n";
+    }
 
-    //Adress* addrDestinataire = new Adress(htons(1025), AF_INET);
+    Adress* servAddr = new Adress;
 
-    if (inet_pton(AF_INET, "127.0.0.1", &addrDestinataire.sin_addr) <= 0)
+    if (servAddr->Init(htons(1025), AF_INET) != true)
+    {
+        std::cout << "Cannot create address\n";
+    }
+
+    if (inet_pton(AF_INET, "127.0.0.1", &servAddr->GetAdress().sin_addr) <= 0)
     {
         // impossible de déterminer l'adresse
         std::cout << "Erreur addresse destinataire : " << WSAGetLastError() << std::endl;
@@ -27,7 +35,9 @@ int main()
         return 1;
     }
     
-    client->SendMsg(addrDestinataire);
+    // add threads + while
+    client->SendMsgTo(servAddr->GetAdress());
+    client->RecieveMsg();
 
     // ------------------ SFML
 
@@ -67,6 +77,8 @@ int main()
         // End
         window.display();
     }
+
+    client->UninInitNetwork();
 
     return 0;
 }

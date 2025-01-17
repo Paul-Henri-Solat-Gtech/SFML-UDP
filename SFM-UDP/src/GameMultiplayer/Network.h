@@ -9,22 +9,32 @@ class Network
 {
 public:
 	Network();
+	void UninInitNetwork();
 
-	void SendMsg(sockaddr_in& addrDestinataire);
+	static void InitDLL();
+
+	bool InitSocket();
+
+	void SendMsgTo(sockaddr_in& addrDestinataire);
+	bool RecieveMsg();
 
 	SOCKET GetSocket() { return m_socket; };
+	sockaddr_in& GetAdressConnectedTo() { return m_addressConnectedTo; };
 
 private:
 	SOCKET m_socket;
+	sockaddr_in m_addressConnectedTo;
 };
 
 class Adress
 {
 public:
-	Adress(USHORT port, ADDRESS_FAMILY addressFamily);
-	Adress(USHORT port, ADDRESS_FAMILY addressFamily, ULONG acceptedAdress);
+	Adress();
 
-	sockaddr_in GetAdress() { return m_adress; };
+	bool Init(USHORT port, ADDRESS_FAMILY addressFamily);
+	bool Init(USHORT port, ADDRESS_FAMILY addressFamily, ULONG acceptedAdress);
+
+	sockaddr_in& GetAdress() { return m_adress; };
 
 private:
 	sockaddr_in m_adress;
