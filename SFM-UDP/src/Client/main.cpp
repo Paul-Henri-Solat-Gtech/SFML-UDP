@@ -27,7 +27,7 @@ DWORD WINAPI Static_Udp(void* pParam)
 
     if (inet_pton(AF_INET, "127.0.0.1", &servAddr->GetAdress().sin_addr) <= 0)
     {
-        // impossible de déterminer l'adresse
+        // impossible de determiner l'adresse
         std::cout << "Erreur addresse destinataire : " << WSAGetLastError() << std::endl;
         closesocket(client->GetSocket());
         WSACleanup();
@@ -91,20 +91,20 @@ int main()
     // ------------------ THREADS
     // Tableau de ThreadId static
     const int numberOfThreads = 2;
-    HANDLE ThreadHandles[numberOfThreads];
+    HANDLE threadHandles[numberOfThreads];
     DWORD threadId[numberOfThreads];
 
     //ThreadHandles[id] = CreateThread(nullptr, 0, fctnName, param, 0, &threadId[id]);
     
     // ------------------ UDP
-    ThreadHandles[0] = CreateThread(nullptr, 0, Static_Udp, 0, 0, &threadId[0]);
+    threadHandles[0] = CreateThread(nullptr, 0, Static_Udp, 0, 0, &threadId[0]);
 
     // ------------------ SFML
-    ThreadHandles[1] = CreateThread(nullptr, 0, Static_Sfml, 0, 0, &threadId[1]);
+    threadHandles[1] = CreateThread(nullptr, 0, Static_Sfml, 0, 0, &threadId[1]);
 
     for (int i = 0; i < 2; i++)
     {
-        if (ThreadHandles[i] == nullptr)
+        if (threadHandles[i] == nullptr)
         {
             std::cerr << "Erreur pendant la creation du thread!" << std::endl;
             return 1;
@@ -112,12 +112,12 @@ int main()
     }
 
     // Verifie si les threads on finis de sexecuter
-    WaitForMultipleObjects(numberOfThreads, ThreadHandles, true, INFINITE);
+    WaitForMultipleObjects(numberOfThreads, threadHandles, true, INFINITE);
 
     // Ferme les Threads apres execution de celles-ci
     for (int i = 0; i < numberOfThreads; i++)
     {
-        CloseHandle(ThreadHandles[i]);
+        CloseHandle(threadHandles[i]);
     }
 
 
